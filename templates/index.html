@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTSU Toolkit - Watermark • YouTube Summarizer • Contact Sheet</title>
+    <meta name="description" content="Bộ công cụ all-in-one: Gán watermark, tóm tắt YouTube, tạo contact sheet video">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <span class="logo-text">OTSU</span>
+                <span class="logo-badge">TOOLKIT</span>
+            </div>
+            <nav class="nav-tabs" id="navTabs">
+                <button class="nav-tab active" data-tool="watermark" id="nav-watermark">
+                    <span class="tab-icon">🖼</span>
+                    <span class="tab-label">Watermark</span>
+                </button>
+                <button class="nav-tab" data-tool="youtube" id="nav-youtube">
+                    <span class="tab-icon">🤖</span>
+                    <span class="tab-label">YouTube AI</span>
+                </button>
+                <button class="nav-tab" data-tool="contactsheet" id="nav-contactsheet">
+                    <span class="tab-icon">🎬</span>
+                    <span class="tab-label">Contact Sheet</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ═══ TOOL 1: WATERMARK ═══ -->
+        <section class="tool-panel active" id="panel-watermark">
+            <div class="tool-header">
+                <h1 class="tool-title">
+                    <span class="title-gradient">Watermark Tool</span>
+                </h1>
+                <p class="tool-desc">Gán watermark "OTSU LABS" vào ảnh & video với typography Geist hiện đại</p>
+            </div>
+
+            <div class="card upload-card" id="watermark-dropzone">
+                <div class="upload-area" id="watermark-upload-area">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                    </div>
+                    <h3>Kéo thả file vào đây</h3>
+                    <p>hoặc click để chọn file</p>
+                    <p class="upload-formats">Hỗ trợ: JPG, PNG, WEBP, MP4, MOV, AVI, MKV</p>
+                    <input type="file" id="watermark-file-input" accept="image/*,video/*" hidden>
+                </div>
+
+                <!-- Preview area -->
+                <div class="preview-area hidden" id="watermark-preview-area">
+                    <div class="preview-header">
+                        <span class="file-name" id="watermark-file-name"></span>
+                        <button class="btn-clear" id="watermark-clear-btn">✕</button>
+                    </div>
+                    <div class="preview-content" id="watermark-preview-content"></div>
+                </div>
+            </div>
+
+            <button class="btn-primary hidden" id="watermark-submit-btn">
+                <span class="btn-text">Gán Watermark</span>
+                <span class="btn-spinner hidden"></span>
+            </button>
+
+            <!-- Result area -->
+            <div class="result-area hidden" id="watermark-result">
+                <div class="card result-card">
+                    <div class="result-header">
+                        <span class="result-badge success">✓ Hoàn thành</span>
+                    </div>
+                    <div class="result-preview" id="watermark-result-preview"></div>
+                    <div class="result-actions">
+                        <a class="btn-download" id="watermark-download-btn" href="#" download>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Tải xuống
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress area -->
+            <div class="progress-area hidden" id="watermark-progress">
+                <div class="card progress-card">
+                    <div class="progress-info">
+                        <div class="spinner"></div>
+                        <span class="progress-text" id="watermark-progress-text">Đang xử lý...</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar" id="watermark-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TOOL 2: YOUTUBE AI ═══ -->
+        <section class="tool-panel" id="panel-youtube">
+            <div class="tool-header">
+                <h1 class="tool-title">
+                    <span class="title-gradient">YouTube AI Summarizer</span>
+                </h1>
+                <p class="tool-desc">Tóm tắt video YouTube bằng Gemini AI — nhanh chóng & chính xác</p>
+            </div>
+
+            <div class="card form-card">
+                <div class="form-group">
+                    <label class="form-label" for="youtube-url">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                        YouTube URL
+                    </label>
+                    <input type="url" id="youtube-url" class="form-input"
+                        placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="gemini-key">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                            <path d="M7 11V7a5 5 0 0110 0v4" />
+                        </svg>
+                        Gemini API Key
+                    </label>
+                    <div class="input-with-toggle">
+                        <input type="password" id="gemini-key" class="form-input"
+                            placeholder="Đã lưu sẵn — để trống nếu dùng key mặc định">
+                        <button class="input-toggle" id="toggle-key-visibility" type="button">👁</button>
+                    </div>
+                    <p class="form-hint">✅ API Key đã được cấu hình sẵn. Bạn có thể để trống hoặc nhập key khác.</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="custom-prompt">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                        Yêu cầu tuỳ chỉnh <span class="optional">(tuỳ chọn)</span>
+                    </label>
+                    <textarea id="custom-prompt" class="form-textarea" rows="3"
+                        placeholder="Ví dụ: Viết bài báo, Dịch sang tiếng Anh, Tóm tắt 5 ý chính..."></textarea>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="youtube-submit-btn">
+                <span class="btn-text">Tóm tắt Video</span>
+                <span class="btn-spinner hidden"></span>
+            </button>
+
+            <!-- Progress area -->
+            <div class="progress-area hidden" id="youtube-progress">
+                <div class="card progress-card">
+                    <div class="progress-info">
+                        <div class="spinner"></div>
+                        <span class="progress-text" id="youtube-progress-text">Đang kết nối...</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar indeterminate" id="youtube-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result area -->
+            <div class="result-area hidden" id="youtube-result">
+                <div class="card result-card youtube-result-card">
+                    <div class="result-header">
+                        <span class="result-badge success">✓ Hoàn thành</span>
+                    </div>
+                    <div class="yt-result-body">
+                        <h3 class="yt-result-title" id="yt-result-title"></h3>
+                        <div class="yt-result-section">
+                            <h4>📝 Tóm tắt</h4>
+                            <div class="yt-summary-text" id="yt-result-summary"></div>
+                        </div>
+                        <details class="yt-transcript-details">
+                            <summary>📄 Xem Transcript gốc (preview)</summary>
+                            <div class="yt-transcript-text" id="yt-result-transcript"></div>
+                        </details>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn-copy" id="yt-copy-summary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
+                            Copy tóm tắt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TOOL 3: CONTACT SHEET ═══ -->
+        <section class="tool-panel" id="panel-contactsheet">
+            <div class="tool-header">
+                <h1 class="tool-title">
+                    <span class="title-gradient">Video Contact Sheet</span>
+                </h1>
+                <p class="tool-desc">Tạo ảnh lưới từ video — chụp frame mỗi N giây, tạo color script tự động</p>
+            </div>
+
+            <div class="card upload-card" id="contactsheet-dropzone">
+                <div class="upload-area" id="contactsheet-upload-area">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+                            <line x1="7" y1="2" x2="7" y2="22" />
+                            <line x1="17" y1="2" x2="17" y2="22" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <line x1="2" y1="7" x2="22" y2="7" />
+                            <line x1="2" y1="17" x2="22" y2="17" />
+                        </svg>
+                    </div>
+                    <h3>Kéo thả video vào đây</h3>
+                    <p>hoặc click để chọn file</p>
+                    <p class="upload-formats">Hỗ trợ: MP4, MOV, AVI, MKV, WEBM</p>
+                    <input type="file" id="contactsheet-file-input" accept="video/*" hidden>
+                </div>
+
+                <div class="preview-area hidden" id="contactsheet-preview-area">
+                    <div class="preview-header">
+                        <span class="file-name" id="contactsheet-file-name"></span>
+                        <button class="btn-clear" id="contactsheet-clear-btn">✕</button>
+                    </div>
+                    <div class="preview-content" id="contactsheet-preview-content"></div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="card settings-card">
+                <h3 class="settings-title">⚙️ Cài đặt</h3>
+                <div class="settings-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="cs-interval">Khoảng cách (giây)</label>
+                        <input type="number" id="cs-interval" class="form-input" value="3" min="1" max="60" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cs-width">Chiều rộng thumbnail (px)</label>
+                        <input type="number" id="cs-width" class="form-input" value="320" min="100" max="1920"
+                            step="10">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cs-cols">Số cột</label>
+                        <input type="number" id="cs-cols" class="form-input" value="5" min="2" max="10" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary hidden" id="contactsheet-submit-btn">
+                <span class="btn-text">Tạo Contact Sheet</span>
+                <span class="btn-spinner hidden"></span>
+            </button>
+
+            <!-- Progress -->
+            <div class="progress-area hidden" id="contactsheet-progress">
+                <div class="card progress-card">
+                    <div class="progress-info">
+                        <div class="spinner"></div>
+                        <span class="progress-text" id="contactsheet-progress-text">Đang tạo contact sheet...</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar indeterminate" id="contactsheet-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="result-area hidden" id="contactsheet-result">
+                <div class="card result-card">
+                    <div class="result-header">
+                        <span class="result-badge success">✓ Hoàn thành</span>
+                        <div class="result-meta" id="contactsheet-meta"></div>
+                    </div>
+                    <div class="result-preview contactsheet-preview" id="contactsheet-result-preview"></div>
+                    <div class="result-actions">
+                        <a class="btn-download" id="contactsheet-download-btn" href="#" download>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Tải Contact Sheet
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with ❤️ by <strong>OTSU</strong> — Watermark • YouTube AI • Contact Sheet</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>

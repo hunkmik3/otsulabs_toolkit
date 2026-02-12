@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.env
+uploads/*
+output/*
+.git/
+.gitignore
+README.md
+*.webp
+*.mp4
