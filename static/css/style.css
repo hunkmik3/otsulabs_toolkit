@@ -170,31 +170,12 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: -0.02em;
 }
 
-.logo-icon {
-    color: var(--accent);
-    font-size: 24px;
-}
-
-.logo-text {
-    color: var(--text-primary);
-    font-weight: 800;
-}
-
-.logo-badge {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 4px;
-    background: var(--accent);
-    color: var(--bg-primary);
+.logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
 }
 
 /* Navigation Tabs */
